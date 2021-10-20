@@ -29,3 +29,4 @@ cd XDHyp:/Connections
 ls
 
 Set-Item -LiteralPath "XDHyp:\Connections\vCenters Name" -sslthumbprint "123456789ABCD123456789ABCDE123456789ABCD" -hypervisorAddress https://vcenter-name/sdk
+
