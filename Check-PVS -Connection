@@ -1,0 +1,29 @@
+<#
+On the fly, I found no way to check which PVS servers & service are online. This is especially important if I want to issue PVS commands from Remote / Orchestrated. 
+Enclosed I have made a small script block to check this. It is certainly not the best way, but it works. 
+One possibility would be to retrieve the status of the PVS-services, but it is unclear whether one can actually connect to the servers trough PVS commands.
+#>
+
+#by JKU 09.08.2019
+$error.clear()
+$k.clear()
+$PVSConnectionServers.clear()
+
+$PVSConnectionServers = @("PVS-Server01", "PVS-Server02")
+
+$k = 0
+Foreach($PVS_Server in $PVSConnectionServers){
+    Set-PvsConnection $PVS_Server
+    if($Error -match $PVS_Server){
+        #Check Next Server
+        $k++
+        IF($k -eq $PVSConnectionServers.Count){
+            Write-Warning "ALL PVS Servers are not reachable, stop script! $PVSConnectionServers"
+            Return
+        }
+    }Else{
+        Break
+    }
+}
+
+Write-Host "Connecting to $PVS_Server"
